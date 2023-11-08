@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book</title>
+</head>
+<style>
+    body {
+    font-family:sans-serif,Arial;
+    background-color: blanchedalmond;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+header {
+        color:yellowgreen;
+        padding: 10px;
+        text-align: center;
+        }       
+span{
+    color: blue;
+        }
+.container {
+    max-width: 800px;
+    background-color: whitesmoke;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(136, 81, 81, 0.1);
+    border-radius: 5px;
+}
+
+#recipe-form input,
+#recipe-form button {
+    margin-bottom: 10px;
+    
+}
+
+.recipe-table {
+    width: 100%;
+    border-collapse: collapse;
+   
+}
+
+.recipe-table th, .recipe-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid rgb(0, 141, 173);
+#recipe-form{
+       color: aqua;
+  }  
+}
+
+.recipe-table th,.recipe-table td  {
+    background-color:rgb(0, 141, 173);
+}
+
+button {
+        background-color: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+
+<body>
+    <script>
+    function addRecipe() {
+        const name = document.getElementById('recipe-name').value;
+        const ingredients = document.getElementById('recipe-ingredients').value;
+        const instructions = document.getElementById('recipe-instructions').value;
+    
+        if (name && ingredients && instructions) {
+            const recipeList = document.getElementById('recipe-list');
+            const newRow = recipeList.insertRow();
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${ingredients}</td>
+                <td>${instructions}</td>
+                <td>
+                    <button onclick="editRecipe(this)">Edit</button>
+                    <button onclick="deleteRecipe(this)">Delete</button>
+                </td>
+            `;
+    
+            // Clear input fields after adding the recipe
+            document.getElementById('recipe-name').value = '';
+            document.getElementById('recipe-ingredients').value = '';
+            document.getElementById('recipe-instructions').value = '';
+        } else {
+            alert("Please fill out all fields!");
+        }
+    }
+    
+    function editRecipe(button) {
+        const row = button.parentNode.parentNode;
+        const name = row.cells[0].innerText;
+        const ingredients = row.cells[1].innerText;
+        const instructions = row.cells[2].innerText;
+    
+        // Fill the form with the selected recipe details
+        document.getElementById('recipe-name').value = name;
+        document.getElementById('recipe-ingredients').value = ingredients;
+        document.getElementById('recipe-instructions').value = instructions;
+    
+        // Remove the selected row from the table
+        row.remove();
+    }
+    
+    function deleteRecipe(button) {
+        const row = button.parentNode.parentNode;
+        row.remove();
+    }
+    </script> 
+    <div class="container">
+       <h1 style="color: red; text-align: center;">Foodie<span>Crush</span></h1>
+        <div id="recipe-form">
+            <h2 style="color:gray;">Add Your Recipe</h2>
+            <input type="text" id="recipe-name" placeholder="Recipe Name"><br><br>
+            
+            <textarea id="recipe-ingredients" placeholder="Ingredients"></textarea><br><br>
+            
+            <textarea id="recipe-instructions" placeholder="Instructions"></textarea><br>
+            <br>
+            <button onclick="addRecipe()">Save Recipe</button>
+        </div>
+        <h2 style="color:grey;">Recipes</h2>
+        <div class="recipe-table">
+            <header>
+        <table border=2 >
+            <thead>
+                <tr>
+                    <th>Recipe Name</th>
+                    <th>Ingredients</th>
+                    <th>Instructions</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="recipe-list"></tbody>
+        </table>
+    </header>
+    </div>
+    </div>
+</body>
+
+</html>
